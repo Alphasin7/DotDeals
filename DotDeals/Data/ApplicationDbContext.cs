@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DotDeals.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotDeals.Data
 {
@@ -8,5 +9,6 @@ namespace DotDeals.Data
         {
                 
         }
+        public DbSet<Category> Categories { get; set; }
     }
 }
