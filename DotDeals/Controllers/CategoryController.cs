@@ -28,6 +28,10 @@ namespace DotDeals.Controllers
             {
                 ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
             }
+            if (obj.Name.ToLower() == "test")
+            {
+                ModelState.AddModelError("", "Test is an invalid value");
+            }
 
             if (ModelState.IsValid) 
             {
