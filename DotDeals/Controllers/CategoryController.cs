@@ -1,6 +1,7 @@
 ﻿using DotDeals.Data;
 using DotDeals.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotDeals.Controllers
 {
@@ -13,14 +14,13 @@ namespace DotDeals.Controllers
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList=_db.Categories.ToList();
+            List<Category> objCategoryList = _db.Categories.ToList();
             return View(objCategoryList);
         }
         public IActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult Create(Category obj)
         {
@@ -28,21 +28,19 @@ namespace DotDeals.Controllers
             {
                 ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
             }
-
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
-
             }
-            
             return View();
+
         }
         public IActionResult Edit(int? id)
         {
-            if (id==null || id==0)
-            {  
+            if (id == null || id == 0)
+            {
                 return NotFound();
             }
             Category? categoryFromDb = _db.Categories.Find(id);
@@ -50,24 +48,49 @@ namespace DotDeals.Controllers
             if (categoryFromDb == null)
             {
                 return NotFound();
-                
             }
-             return View(categoryFromDb);
+            return View(categoryFromDb);
         }
-
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            
             if (ModelState.IsValid)
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
-                 
             }
-
             return View();
+
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? categoryFromDb = _db.Categories.Find(id);
+            
+
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Category? obj = _db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
+
