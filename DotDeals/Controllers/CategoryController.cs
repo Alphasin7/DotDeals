@@ -32,6 +32,7 @@ namespace DotDeals.Controllers
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category Created Successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -44,7 +45,7 @@ namespace DotDeals.Controllers
                 return NotFound();
             }
             Category? categoryFromDb = _db.Categories.Find(id);
-            
+
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -58,6 +59,8 @@ namespace DotDeals.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated Successfully";
+
                 return RedirectToAction("Index");
             }
             return View();
@@ -71,7 +74,7 @@ namespace DotDeals.Controllers
                 return NotFound();
             }
             Category? categoryFromDb = _db.Categories.Find(id);
-            
+
 
             if (categoryFromDb == null)
             {
@@ -87,10 +90,15 @@ namespace DotDeals.Controllers
             {
                 return NotFound();
             }
+
             _db.Categories.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category Deleted Successfully";
             return RedirectToAction("Index");
         }
+
+
     }
 }
+
 
