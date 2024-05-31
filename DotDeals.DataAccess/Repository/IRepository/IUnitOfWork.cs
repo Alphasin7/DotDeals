@@ -1,5 +1,4 @@
-﻿using DotDeals.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DotDeals.DataAccess.Repository.IRepository
 {
-    public interface ICategoryRepository:IRepository<Category>
+    internal interface IUnitOfWork
     {
-        void Update (Category obj);
-      
+        ICategoryRepository Category { get; }
+        void Save();
+
     }
 }
